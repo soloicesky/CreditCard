@@ -1,0 +1,6 @@
+
+host: bea-uat.bindolabs.com:8081
+merchantid: 000015204000099
+terminalid: 63150001
+tpdu: 7000280000
+eds: 0003000A00F000
