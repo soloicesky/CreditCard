@@ -191,10 +191,17 @@ func PrepareISO8583Message(fdSets []byte)(msg []byte , err error){
 		}
 
 		fmt.Printf("[id]:%dvalue:%s\r\n",id, e)
+		if vlen > attr.maxLen {
+			err = fmt.Errorf("[%d]len invalid, expected:%d, in:%d\r\n", id, attr.maxLen, vlen)
+			continue
+		}
 
 		switch attr.lenType {
 			case FIX:
-
+				if vlen != attr.maxLen {
+					err = fmt.Errorf("[%d]len invalid, expected:%d, in:%d\r\n", id, attr.maxLen, vlen)
+					continue
+				}
 			case VARL:
 				message[offset] = byte(vlen);
 				offset++
