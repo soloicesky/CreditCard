@@ -25,5 +25,5 @@ func Refund(transData TransactionData, config Config) (TransactionData, error) {
 	}
 
 	transData.TransType = REFUND
-	return CreatAndSendAutoriztion(transData, config, fields)
+	return CommunicationHost(transData, config, fields)
 }

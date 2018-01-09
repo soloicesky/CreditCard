@@ -23,5 +23,5 @@ func Reversal(transData TransactionData, config Config) (TransactionData, error)
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62}
 	}
 
-	return CreatAndSendAutoriztion(transData, config, fields)
+	return CommunicationHost(transData, config, fields)
 }
