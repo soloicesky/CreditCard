@@ -17,14 +17,14 @@ func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, er
 	conn, err := net.Dial("tcp", config.Host)
 	fmt.Println("connet success")
 	if err != nil {
-		return rspMsg, err
+		return rspMsg, CONN_ERR
 	}
 
 	conn.SetReadDeadline(time.Now().Add(time.Duration(timeoutS) * time.Second))
 	count, err = conn.Write(reqMsg)
 
 	if err != nil {
-		return rspMsg, err
+		return rspMsg, SEND_ERR
 	}
 
 	totalLen := 0 //保存数据长度
@@ -35,7 +35,7 @@ func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, er
 
 		if err != nil {
 			fmt.Printf("read error:%s\r\n", err)
-			return rspMsg, err
+			return rspMsg, RECV_ERR
 		}
 
 		rspMsg = append(rspMsg, buf[0:count]...)
@@ -100,6 +100,12 @@ func CommunicationHost(transData TransactionData, config Config, fields []byte) 
 	msg, err = communicateWithHost(msg, config, 30)
 
 	if err != nil {
+
+		switch err{
+		case CONN_ERR:
+			transData.ResponseCode = 
+		}
+
 		return transData, err
 	}
 
