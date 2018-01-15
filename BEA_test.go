@@ -37,3 +37,68 @@ func TestBEA(t *testing.T) {
 	fmt.Printf("%+v\n", transData)
 	transData, _ = Sale(transData, config)
 }
+
+func getConfig() Config {
+	return Config{
+		TPDU: "7000280000",
+		EDS:  "0003000A00F000",
+		Host: "192.168.22.188:8081",
+	}
+}
+
+func TestPreAuthorization(t *testing.T) {
+	fmt.Println("------------TestPreAuthorization start-----------------")
+	var transData TransactionData
+	transData.TransId = "000001"
+	transData.TransType = PREAUTHCOMPLETION
+	transData.Track2 = "5413330056003578D251210100062001602"
+	transData.PosEntryMode = "INSERT"
+	transData.MerchantId = "000015204000099"
+	transData.TerminalId = "63150001"
+	fmt.Print("request data:\n ", transData.FormJson())
+	replyData, err := PreAuthorization(transData, getConfig())
+	if err != nil {
+		t.Error(replyData.ResponseCode)
+		return
+	}
+	fmt.Print("reply data:\n ", replyData.FormJson())
+	fmt.Println("------------TestPreAuthorization end-----------------")
+}
+
+func TestPostPreAuthorization(t *testing.T) {
+	fmt.Println("------------TestPostPreAuthorization start-----------------")
+	fmt.Println("------------TestPostPreAuthorization end-----------------")
+}
+func TestRefund(t *testing.T) {
+	fmt.Println("------------TestRefund start-----------------")
+	fmt.Println("------------TestRefund end-----------------")
+}
+func TestSales(t *testing.T) {
+	fmt.Println("------------TestSales start-----------------")
+	fmt.Println("------------TestSales end-----------------")
+}
+
+func TestVoid_PreAuthorization(t *testing.T) {
+	fmt.Println("------------TestVoid_PreAuthorization start-----------------")
+	fmt.Println("------------TestVoid_PreAuthorization end-----------------")
+}
+
+func TestVoid_PostPreAuthorization(t *testing.T) {
+	fmt.Println("------------TestVoid_PostPreAuthorization start-----------------")
+	fmt.Println("------------TestVoid_PostPreAuthorization end-----------------")
+}
+
+func TestVoid_Refund(t *testing.T) {
+	fmt.Println("------------TestVoidRefund start-----------------")
+	fmt.Println("------------TestVoidRefund end-----------------")
+}
+
+func TestVoid_Sales(t *testing.T) {
+	fmt.Println("------------TestVoid_Sales start-----------------")
+	fmt.Println("------------TestVoid_Sales end-----------------")
+}
+
+func TestReversal(t *testing.T) {
+	fmt.Println("------------TestReversal start-----------------")
+	fmt.Println("------------TestReversal end-----------------")
+}
