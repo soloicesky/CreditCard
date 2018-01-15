@@ -1,8 +1,8 @@
 package BEA
 
 import (
-	"BEA/ISO8583"
-	"BEA/TLV"
+	"ISO8583"
+	"TLV"
 	_ "crypto/cipher"
 	"crypto/des"
 	"fmt"

@@ -1,8 +1,8 @@
 package BEA
 
 import (
-	"BEA/ISO8583"
-	"BEA/TLV"
+	"ISO8583"
+	"TLV"
 	"errors"
 	"fmt"
 	"net"
@@ -100,12 +100,6 @@ func CommunicationHost(transData TransactionData, config Config, fields []byte) 
 	msg, err = communicateWithHost(msg, config, 30)
 
 	if err != nil {
-
-		switch err{
-		case CONN_ERR:
-			transData.ResponseCode = 
-		}
-
 		return transData, err
 	}
 

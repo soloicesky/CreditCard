@@ -1,7 +1,7 @@
 package TLV
 
 import (
-	"BEA/ISO8583"
+	"ISO8583"
 	"fmt"
 )
 
