@@ -15,7 +15,7 @@ func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, er
 	rspMsg := make([]byte, 0)
 	fmt.Println("connet host: ", config.Host)
 	conn, err := net.Dial("tcp", config.Host)
-	fmt.Println("connet success")
+
 	if err != nil {
 		return rspMsg, CONN_ERR
 	}

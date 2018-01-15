@@ -1,8 +1,8 @@
 package BEA
 
 import (
-	"BEA/ISO8583"
-	"BEA/TLV"
+	"CreditCard/ISO8583"
+	"CreditCard/TLV"
 	"fmt"
 	"testing"
 )
