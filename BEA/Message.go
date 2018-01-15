@@ -1,8 +1,8 @@
 package BEA
 
 import (
-	"ISO8583"
-	"TLV"
+	"CreditCard/ISO8583"
+	"CreditCard/TLV"
 	_ "crypto/cipher"
 	"crypto/des"
 	"fmt"
