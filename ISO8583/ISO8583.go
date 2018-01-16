@@ -287,6 +287,11 @@ func DecodeISO8583Message(msg [] byte, saveData SaveElement, storage interface{}
 	var strlen string
 
 	// fmt.Printf("msg in:%s\r\n", Base16Encode(msg))
+	if len(msg)<10 {
+		fmt.Printf("invalid msg!!!", Base16Encode(msg))
+		return fmt.Errorf("invalid message")
+	}
+
 	message := msg[2:]
 	bitmap := message[0:8]
 	offset:= 8
@@ -299,7 +304,7 @@ func DecodeISO8583Message(msg [] byte, saveData SaveElement, storage interface{}
 
 				if !ok {
 					
-					return  fmt.Errorf("field %d attribute not found\r\n");
+					return  fmt.Errorf("field %d attribute not found\r\n")
 				}
 
 				switch attr.lenType {

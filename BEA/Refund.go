@@ -25,5 +25,6 @@ func Refund(transData TransactionData, config Config) (TransactionData, error) {
 	}
 
 	transData.TransType = REFUND
+	transData.isReversal = false
 	return CommunicationHost(transData, config, fields)
 }

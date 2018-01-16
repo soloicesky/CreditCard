@@ -23,6 +23,7 @@ func Sale(transData TransactionData, config Config) (TransactionData, error) {
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62}
 	}
 	transData.TransType = SALE
+	transData.isReversal = false
 	return CommunicationHost(transData, config, fields)
 }
 
@@ -51,5 +52,6 @@ func OfflineSale(transData TransactionData, config Config) (TransactionData, err
 	}
 
 	transData.TransType = VOIDOFFLINESALE
+	transData.isReversal = false
 	return CommunicationHost(transData, config, fields)
 }

@@ -17,6 +17,7 @@ func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, er
 	conn, err := net.Dial("tcp", config.Host)
 
 	if err != nil {
+		fmt.Println("fail to connect to", config.Host);
 		return rspMsg, CONN_ERR
 	}
 

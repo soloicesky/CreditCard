@@ -1,7 +1,7 @@
 package TLV
 
 import (
-	"ISO8583"
+	"CreditCard/ISO8583"
 	"fmt"
 )
 
