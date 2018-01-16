@@ -23,6 +23,7 @@ func PreAuthorization(transData TransactionData, config Config) (TransactionData
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62}
 	}
 	transData.TransType = PREAUTH
+	transData.isReversal = false
 	return CommunicationHost(transData, config, fields)
 }
 
@@ -35,6 +36,7 @@ func PreAuthorization(transData TransactionData, config Config) (TransactionData
 func PreAuthCompletion(transData TransactionData, config Config) (TransactionData, error) {
 	var fields []byte
 	transData.TransType = PREAUTHCOMPLETION
+	transData.isReversal = false
 
 	switch transData.PosEntryMode {
 	case INSERT:

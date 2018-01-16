@@ -23,6 +23,7 @@ const (
 	OFFLINESALE           string = "OFFLINESALE"           //离线消费
 	VOIDOFFLINESALE       string = "VOIDOFFLINESALE"       //离线消费撤销
 	PREAUTH               string = "PREAUTH"               //预授权
+	VOIDPREAUTH           string = "VOIDPREAUTH"           //预授权
 	PREAUTHCOMPLETION     string = "PREAUTHCOMPLETION"     //预授权完成
 	VOIDPREAUTHCOMPLETION string = "VOIDPREAUTHCOMPLETION" //预授权完成撤销
 	SETTLEMENT            string = "SETTLEMENT"            //结算
@@ -55,7 +56,9 @@ var param = map[string]msgParam{
 	REFUND:                {"0200", "200000", "028", "00"}, //退货
 	VOIDREFUND:            {"0200", "220000", "028", "00"}, //撤销退货
 	OFFLINESALE:           {"0220", "000000", "028", "00"}, //离线消费
+	VOIDOFFLINESALE:       {"0220", "000000", "028", "00"}, //离线消费
 	PREAUTH:               {"0100", "000000", "028", "00"}, //预授权
+	VOIDPREAUTH:           {"0120", "000000", "028", "00"}, //预授权
 	PREAUTHCOMPLETION:     {"0220", "000000", "028", "00"}, //预授权完成
 	VOIDPREAUTHCOMPLETION: {"0220", "000000", "028", "00"}, //预授权完成
 	REVERSAL:              {"0400", "000000", "028", "00"}, //预授权完成

@@ -28,6 +28,7 @@ type TransactionData struct {
 	OriginalTransType string            `json:"origin_trans_type,omitempty"` //原交易类型----
 	TransType         string            `json:"trans_type,omitempty"`        //交易类型------
 	CurrencyCode      string            `json:"curreny,omitempty"`           //货币代码------
+	isReversal        bool              `json:"isReversal"`                  //是否为冲正
 }
 
 func (t TransactionData) FormJson() string {
