@@ -17,7 +17,7 @@ func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, er
 	conn, err := net.Dial("tcp", config.Host)
 
 	if err != nil {
-		fmt.Println("fail to connect to", config.Host);
+		fmt.Println("fail to connect to", config.Host)
 		return rspMsg, CONN_ERR
 	}
 
@@ -101,11 +101,24 @@ func CommunicationHost(transData TransactionData, config Config, fields []byte) 
 	msg, err = communicateWithHost(msg, config, 30)
 
 	if err != nil {
+		switch err{
+			case RECV_ERR:
+				transData.ResponseCode = BINDO_RECV_FAILED
+			case CONN_ERR:
+				fallthrough
+			case SEND_ERR:
+				transData.ResponseCode = BINDO_COMM_ERROR
+		default:
+		}
 		return transData, err
 	}
 
 	fmt.Printf("reponse ISO8583:%s\r\n", ISO8583.Base16Encode(msg))
 	err = ISO8583.DecodeISO8583Message(msg[2+5+7:], SaveData, transData)
+
+	if err!=nil {
+		transData.ResponseCode = BINDO_RECV_FAILED
+	}
 
 	return transData, err
 }

@@ -21,6 +21,8 @@ func Reversal(transData TransactionData, config Config) (TransactionData, error)
 		fields = []byte{0, 3, 4, 11, 22, 24, 25, 35, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 
 	return CommunicationHost(transData, config, fields)

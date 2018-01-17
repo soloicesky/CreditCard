@@ -68,7 +68,7 @@ func TestPreAuthorization(t *testing.T) {
 	transData.IccRelatedData = iccData
 	fmt.Print("request data:\n ", transData.FormJson())
 	replyData, err := PreAuthorization(transData, getConfig())
-	
+
 	fmt.Print("%v", err)
 	fmt.Print("reply data:\n ", replyData.FormJson())
 	fmt.Println("------------TestPreAuthorization end-----------------")
