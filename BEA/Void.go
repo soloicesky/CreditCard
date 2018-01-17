@@ -20,6 +20,8 @@ func VoidRefund(transData TransactionData, config Config) (TransactionData, erro
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 37, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 	transData.TransType = VOIDREFUND
 	transData.isReversal = false
@@ -48,6 +50,8 @@ func VoidSale(transData TransactionData, config Config) (TransactionData, error)
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 37, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 	transData.TransType = VOIDSALE
 	transData.isReversal = false
@@ -75,12 +79,13 @@ func VoidOfflineSale(transData TransactionData, config Config) (TransactionData,
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 38, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 38, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 	transData.TransType = VOIDOFFLINESALE
 	transData.isReversal = false
 	return CommunicationHost(transData, config, fields)
 }
-
 
 /**
 	根据提供的现有交易数据执行一笔预授权撤销交易
@@ -103,6 +108,8 @@ func VoidPreAuth(transData TransactionData, config Config) (TransactionData, err
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 38, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 38, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 	transData.TransType = VOIDPREAUTH
 	transData.isReversal = false
@@ -130,6 +137,8 @@ func VoidPreAuthCompletion(transData TransactionData, config Config) (Transactio
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 38, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 38, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 	transData.TransType = VOIDPREAUTHCOMPLETION
 	transData.isReversal = false

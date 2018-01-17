@@ -21,6 +21,8 @@ func PreAuthorization(transData TransactionData, config Config) (TransactionData
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 	transData.TransType = PREAUTH
 	transData.isReversal = false
@@ -51,6 +53,8 @@ func PreAuthCompletion(transData TransactionData, config Config) (TransactionDat
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 38, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 38, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 	transData, err := CommunicationHost(transData, config, fields)
 	return transData, err

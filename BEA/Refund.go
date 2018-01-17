@@ -22,6 +22,8 @@ func Refund(transData TransactionData, config Config) (TransactionData, error) {
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 22, 24, 25, 35, 37, 38, 41, 42, 62}
 	case MANUAL:
 		fields = []byte{0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 37, 38, 41, 42, 62}
+	default:
+		return transData, INVALID_DATA
 	}
 
 	transData.TransType = REFUND
