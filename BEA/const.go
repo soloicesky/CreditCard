@@ -69,7 +69,7 @@ var param = map[TransactionType]msgParam{
 	REVERSAL:              {"0400", "000000", "028", "00"}, //冲正
 }
 
-var fieldMap = map[TransactionType]FieldMap{
+var fieldMap = map[TransactionType]beaFieldMap{
 	SALE:                  saleFieldMap,                  //消费参数
 	VOIDSALE:              voidSaleFieldMap,              //消费撤销参数
 	REFUND:                refundFieldMap,                //退货
@@ -83,10 +83,10 @@ var fieldMap = map[TransactionType]FieldMap{
 	REVERSAL:              reversalFieldMap,              //冲正
 }
 
-type FieldMap map[EntryMode][]byte
+type beaFieldMap map[EntryMode][]byte
 
 var (
-	preAuthorizationFieldMap = FieldMap{
+	preAuthorizationFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 41, 42, 55, 62},
@@ -95,7 +95,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62},
 	}
 
-	saleFieldMap = FieldMap{
+	saleFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 41, 42, 55, 62},
@@ -103,7 +103,7 @@ var (
 		MSD:      {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 41, 42, 62},
 		MANUAL:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62},
 	}
-	offlineSaleFieldMap = FieldMap{
+	offlineSaleFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 37, 38, 41, 42, 55, 60, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 37, 38, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 37, 38, 41, 42, 55, 60, 62},
@@ -111,7 +111,7 @@ var (
 		MSD:      {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 37, 38, 41, 42, 60, 62},
 		MANUAL:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 37, 38, 41, 42, 60, 62},
 	}
-	preAuthCompletionFieldMap = FieldMap{
+	preAuthCompletionFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 37, 38, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 38, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 37, 38, 41, 42, 55, 62},
@@ -120,7 +120,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 38, 41, 42, 62},
 	}
 
-	refundFieldMap = FieldMap{
+	refundFieldMap = beaFieldMap{
 		INSERT:   {0, 3, 4, 11, 22, 23, 24, 25, 35, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 12, 13, 22, 24, 25, 35, 37, 38, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 12, 13, 22, 23, 24, 25, 35, 37, 38, 41, 55, 62},
@@ -129,7 +129,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 37, 38, 41, 42, 62},
 	}
 
-	voidRefundFieldMap = FieldMap{
+	voidRefundFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 37, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 37, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 37, 41, 42, 55, 62},
@@ -138,7 +138,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 41, 42, 62},
 	}
 
-	voidSaleFieldMap = FieldMap{
+	voidSaleFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 37, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 37, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 37, 41, 42, 55, 62},
@@ -147,7 +147,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 37, 41, 42, 62},
 	}
 
-	voidOfflineSaleFieldMap = FieldMap{
+	voidOfflineSaleFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 38, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 38, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 38, 41, 42, 55, 62},
@@ -156,7 +156,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 38, 41, 42, 62},
 	}
 
-	voidPreAuthFieldMap = FieldMap{
+	voidPreAuthFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 38, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 38, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 38, 41, 42, 55, 62},
@@ -165,7 +165,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 38, 41, 42, 62},
 	}
 
-	voidPreAuthCompletionFieldMap = FieldMap{
+	voidPreAuthCompletionFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 38, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 38, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 12, 13, 14, 22, 23, 24, 25, 35, 38, 41, 42, 55, 62},
@@ -173,7 +173,7 @@ var (
 		MSD:      {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 35, 38, 41, 42, 62},
 		MANUAL:   {0, 2, 3, 4, 11, 12, 13, 14, 22, 24, 25, 38, 41, 42, 62},
 	}
-	batchUploadFieldMap = FieldMap{
+	batchUploadFieldMap = beaFieldMap{
 		INSERT:   {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 41, 42, 55, 62},
 		SWIPE:    {0, 2, 3, 4, 11, 14, 22, 24, 25, 35, 41, 42, 62},
 		WAVE:     {0, 2, 3, 4, 11, 14, 22, 23, 24, 25, 35, 41, 42, 55, 62},
@@ -182,7 +182,7 @@ var (
 		MANUAL:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62},
 	}
 
-	reversalFieldMap = FieldMap{
+	reversalFieldMap = beaFieldMap{
 		INSERT:   {0, 3, 4, 11, 22, 23, 24, 25, 35, 41, 42, 55, 62},
 		SWIPE:    {0, 3, 4, 11, 22, 24, 25, 35, 41, 42, 62},
 		WAVE:     {0, 3, 4, 11, 22, 23, 24, 25, 35, 41, 42, 55, 62},
@@ -194,7 +194,7 @@ var (
 	logonField = []byte{0, 3, 11, 24, 41}
 )
 
-func GetAllEntryModes() []EntryMode {
+func getAllEntryModes() []EntryMode {
 	var modes []EntryMode
 	modes = append(modes, INSERT)
 	modes = append(modes, SWIPE)
@@ -205,8 +205,8 @@ func GetAllEntryModes() []EntryMode {
 	return modes
 }
 
-func GetSupportEntryMode(mode EntryMode) error {
-	modes := GetAllEntryModes()
+func getSupportEntryMode(mode EntryMode) error {
+	modes := getAllEntryModes()
 	for _, v := range modes {
 		if mode == v {
 			return nil
@@ -234,7 +234,7 @@ func GetSupportEntryMode(mode EntryMode) error {
 //	return types
 //}
 
-func GetAllSupportTransTypes() []TransactionType {
+func getAllSupportTransTypes() []TransactionType {
 	var types []TransactionType
 	for k, _ := range fieldMap {
 		types = append(types, k)
@@ -242,7 +242,7 @@ func GetAllSupportTransTypes() []TransactionType {
 	return types
 }
 
-func GetFields(transType TransactionType, mode EntryMode) ([]byte, error) {
+func getFields(transType TransactionType, mode EntryMode) ([]byte, error) {
 	fields := fieldMap[transType][mode]
 	if len(fields) > 0 {
 		return fields, nil

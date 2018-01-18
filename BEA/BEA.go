@@ -5,12 +5,12 @@ import (
 )
 
 func DoRequest(transData *TransactionData, config *Config) (*TransactionData, error) {
-	err := GetSupportEntryMode(transData.PosEntryMode)
+	err := getSupportEntryMode(transData.PosEntryMode)
 	if err != nil {
 		return nil, fmt.Errorf("GetSupportEntryMode error: %s", err.Error())
 	}
 
-	fields, err := GetFields(transData.TransType, transData.PosEntryMode)
+	fields, err := getFields(transData.TransType, transData.PosEntryMode)
 	if err != nil {
 		return nil, fmt.Errorf("GetFields error: %s", err.Error())
 	}

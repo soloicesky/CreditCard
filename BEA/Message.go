@@ -50,7 +50,7 @@ func encryptISO8583Message(msg []byte) []byte {
 	根据给定的交易数据和需要打包的位图信息生成ISO8583 报文
 
 **/
-func CreateIISO8583Message(transData *TransactionData, fields []byte, config *Config) ([]byte, error) {
+func createIISO8583Message(transData *TransactionData, fields []byte, config *Config) ([]byte, error) {
 	ISO8583.PushElement(0, param[transData.TransType].id)
 	ISO8583.PushElement(2, transData.Pan)
 	if transData.TransType == REVERSAL {

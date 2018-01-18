@@ -82,7 +82,7 @@ func saveData(fieldId int, value string, storage interface{}) error {
 	fields 域集合
 **/
 func communicateWithHost(transData *TransactionData, config *Config, fields []byte) (*TransactionData, error) {
-	msg, err := CreateIISO8583Message(transData, fields, config)
+	msg, err := createIISO8583Message(transData, fields, config)
 	if err != nil {
 		return transData, fmt.Errorf("CreateIISO8583Message error: %s", err.Error())
 	}
