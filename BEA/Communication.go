@@ -10,22 +10,17 @@ import (
 )
 
 //和后台通信发送授权请求报文并接收授权响应报文
-func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, error) {
-	var count int
+func sendData(reqMsg []byte, config *Config) ([]byte, error) {
 	rspMsg := make([]byte, 0)
-	fmt.Println("connet host: ", config.Host)
 	conn, err := net.Dial("tcp", config.Host)
-
 	if err != nil {
-		fmt.Println("fail to connect to", config.Host)
-		return rspMsg, CONN_ERR
+		return nil, CONN_ERR
 	}
 
-	conn.SetReadDeadline(time.Now().Add(time.Duration(timeoutS) * time.Second))
-	count, err = conn.Write(reqMsg)
-
+	conn.SetReadDeadline(time.Now().Add(time.Duration(config.TimeOut) * time.Second))
+	count, err := conn.Write(reqMsg)
 	if err != nil {
-		return rspMsg, SEND_ERR
+		return nil, SEND_ERR
 	}
 
 	totalLen := 0 //保存数据长度
@@ -33,10 +28,8 @@ func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, er
 
 	for {
 		count, err = conn.Read(buf)
-
 		if err != nil {
-			fmt.Printf("read error:%s\r\n", err)
-			return rspMsg, RECV_ERR
+			return nil, RECV_ERR
 		}
 
 		rspMsg = append(rspMsg, buf[0:count]...)
@@ -59,9 +52,8 @@ func communicateWithHost(reqMsg []byte, config Config, timeoutS int) ([]byte, er
 	value  值
 	storage 存储位置
 **/
-func SaveData(fieldId int, value string, storage interface{}) error {
+func saveData(fieldId int, value string, storage interface{}) error {
 	transData, OK := storage.(TransactionData)
-
 	if !OK {
 		return errors.New("interface is not a type of TransactionData")
 	}
@@ -74,7 +66,7 @@ func SaveData(fieldId int, value string, storage interface{}) error {
 	case 38:
 		transData.AuthCode = value
 	case 39:
-		transData.ResponseCode = value
+		transData.ResponseCode = BEACode(value)
 	case 55:
 		de55 := ISO8583.Base16Decode(value)
 		TLV.ParseConstructTLVMsg(de55, transData.IccRelatedData)
@@ -89,36 +81,24 @@ func SaveData(fieldId int, value string, storage interface{}) error {
 	config 配置参数
 	fields 域集合
 **/
-func CommunicationHost(transData TransactionData, config Config, fields []byte) (TransactionData, error) {
+func communicateWithHost(transData *TransactionData, config *Config, fields []byte) (*TransactionData, error) {
 	msg, err := CreateIISO8583Message(transData, fields, config)
-
 	if err != nil {
-		fmt.Printf("err:%v\r\n", err)
-		return transData, err
+		return transData, fmt.Errorf("CreateIISO8583Message error: %s", err.Error())
 	}
 
 	fmt.Printf("Final Msg:%s\r\n", ISO8583.Base16Encode(msg))
-	msg, err = communicateWithHost(msg, config, 30)
-
+	msg, err = sendData(msg, config)
 	if err != nil {
-		switch err{
-			case RECV_ERR:
-				transData.ResponseCode = BINDO_RECV_FAILED
-			case CONN_ERR:
-				fallthrough
-			case SEND_ERR:
-				transData.ResponseCode = BINDO_COMM_ERROR
-		default:
-		}
-		return transData, err
+		return nil, err
 	}
 
 	fmt.Printf("reponse ISO8583:%s\r\n", ISO8583.Base16Encode(msg))
-	err = ISO8583.DecodeISO8583Message(msg[2+5+7:], SaveData, transData)
-
-	if err!=nil {
-		transData.ResponseCode = BINDO_RECV_FAILED
+	err = ISO8583.DecodeISO8583Message(msg[2+5+7:], saveData, transData)
+	if err != nil {
+		transData.ResponseCode = BINDO_RECV_ERR
+		return nil, fmt.Errorf("ISO8583::DecodeISO8583Message error: %s", err.Error())
 	}
 
-	return transData, err
+	return transData, nil
 }

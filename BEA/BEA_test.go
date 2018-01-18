@@ -16,7 +16,7 @@ func TestBEA(t *testing.T) {
 	transData.TransDate = "1221"
 	transData.TransTime = "164030"
 	// transData.TransType = SALE
-	transData.CurrencyCode = "0344"
+	//transData.CurrencyCode = "0344"
 	transData.MerchantId = "000015204000099"
 	transData.TerminalId = "63150001"
 	transData.Pan = ""
@@ -35,17 +35,19 @@ func TestBEA(t *testing.T) {
 	config.EDS = "0003000A00F000"
 	config.Host = "192.168.22.188:8081"
 	fmt.Printf("%+v\n", transData)
-	transData, _ = Sale(transData, config)
+	//transData, _ = Sale(transData, config)
 }
 
 func getConfig() Config {
 	return Config{
-		TPDU: "7000280000",
-		EDS:  "0003000A00F000",
-		Host: "192.168.22.188:8081",
+		TPDU:    "7000280000",
+		EDS:     "0003000A00F000",
+		Host:    "192.168.22.188:8081",
+		TimeOut: 30,
 	}
 }
 
+/*
 func TestPreAuthorization(t *testing.T) {
 	fmt.Println("------------TestPreAuthorization start-----------------")
 	var transData TransactionData
@@ -282,4 +284,4 @@ func TestReversal(t *testing.T) {
 	fmt.Print("%v", err)
 	fmt.Print("reply data:\n ", replyData.FormJson())
 	fmt.Println("------------TestReversal end-----------------")
-}
+}*/
