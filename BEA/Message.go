@@ -53,12 +53,19 @@ func encryptISO8583Message(msg []byte) []byte {
 func CreateIISO8583Message(transData *TransactionData, fields []byte, config *Config) ([]byte, error) {
 	ISO8583.PushElement(0, param[transData.TransType].id)
 	ISO8583.PushElement(2, transData.Pan)
-	ISO8583.PushElement(3, param[transData.TransType].processingCode)
+	if transData.TransType == REVERSAL {
+		ISO8583.PushElement(3, param[transData.OriginalTransType].processingCode)
+		ISO8583.PushElement(24, param[transData.OriginalTransType].nii)
+		ISO8583.PushElement(25, param[transData.OriginalTransType].posCondictionCode)
+	} else {
+		ISO8583.PushElement(3, param[transData.TransType].processingCode)
+		ISO8583.PushElement(24, param[transData.TransType].nii)
+		ISO8583.PushElement(25, param[transData.TransType].posCondictionCode)
+	}
+
 	ISO8583.PushElement(4, fmt.Sprintf("%012s", transData.Amount))
 	ISO8583.PushElement(11, fmt.Sprintf("%06s", transData.TransId))
 	ISO8583.PushElement(14, transData.CardExpireDate)
-	ISO8583.PushElement(24, param[transData.TransType].nii)
-	ISO8583.PushElement(25, param[transData.TransType].posCondictionCode)
 
 	if ISO8583.StringIsEmpty(transData.Pin) {
 		ISO8583.PushElement(22, posEntryMode[transData.PosEntryMode]+"2")
