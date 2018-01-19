@@ -69,7 +69,7 @@ var param = map[TransactionType]msgParam{
 	REVERSAL:              {"0400", "000000", "028", "00"}, //冲正
 }
 
-var fieldMap = map[TransactionType]beaFieldMap{
+var transactionFieldMap = map[TransactionType]beaFieldMap{
 	SALE:                  saleFieldMap,                  //消费参数
 	VOIDSALE:              voidSaleFieldMap,              //消费撤销参数
 	REFUND:                refundFieldMap,                //退货
@@ -81,6 +81,10 @@ var fieldMap = map[TransactionType]beaFieldMap{
 	PREAUTHCOMPLETION:     preAuthCompletionFieldMap,     //预授权完成
 	VOIDPREAUTHCOMPLETION: voidPreAuthCompletionFieldMap, //预授权完成撤销
 	REVERSAL:              reversalFieldMap,              //冲正
+}
+var managerFieldMap = map[TransactionType][]byte{
+	LOGON:      logonField,
+	SETTLEMENT: settlementField,
 }
 
 type beaFieldMap map[EntryMode][]byte
@@ -190,8 +194,11 @@ var (
 		MSD:      {0, 3, 4, 11, 22, 24, 25, 35, 41, 42, 62},
 		MANUAL:   {0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62},
 	}
+)
 
-	logonField = []byte{0, 3, 11, 24, 41}
+var (
+	logonField      = []byte{0, 3, 11, 24, 41}
+	settlementField = []byte{0, 3, 11, 24, 41}
 )
 
 func getAllEntryModes() []EntryMode {
@@ -234,16 +241,26 @@ func getSupportEntryMode(mode EntryMode) error {
 //	return types
 //}
 
-func getAllSupportTransTypes() []TransactionType {
-	var types []TransactionType
-	for k, _ := range fieldMap {
-		types = append(types, k)
-	}
-	return types
-}
+//func getAllSupportTransTypes() []TransactionType {
+//	var types []TransactionType
+//	for k, _ := range fieldMap {
+//		types = append(types, k)
+//	}
+//	return types
+//}
 
 func getFields(transType TransactionType, mode EntryMode) ([]byte, error) {
-	fields := fieldMap[transType][mode]
+	var fields []byte
+	for k, v := range managerFieldMap {
+		if k == transType {
+			fields = v
+			break
+		}
+	}
+	if len(fields) == 0 {
+		fields = transactionFieldMap[transType][mode]
+	}
+
 	if len(fields) > 0 {
 		return fields, nil
 	} else {
