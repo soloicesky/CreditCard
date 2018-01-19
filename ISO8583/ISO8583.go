@@ -129,7 +129,7 @@ var fieldRepo = make(map[int]string)
   fieldId 域标识
   value 域的值
 **/
-func PushElement(fieldId int, value string) {
+func SetElement(fieldId int, value string) {
 	fieldRepo[fieldId] = value
 }
 
@@ -138,7 +138,7 @@ func PushElement(fieldId int, value string) {
    fieldId 域标识
    返回域的值和错误
 **/
-func PullElement(fieldId int) (v string, err error) {
+func GetElement(fieldId int) (v string, err error) {
 	value, OK := fieldRepo[fieldId]
 
 	if OK {

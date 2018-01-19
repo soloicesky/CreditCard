@@ -51,53 +51,53 @@ func encryptISO8583Message(msg []byte) []byte {
 
 **/
 func createIISO8583Message(transData *TransactionData, fields []byte, config *Config) ([]byte, error) {
-	ISO8583.PushElement(0, param[transData.TransType].id)
-	ISO8583.PushElement(2, transData.Pan)
+	ISO8583.SetElement(0, param[transData.TransType].id)
+	ISO8583.SetElement(2, transData.Pan)
 	if transData.TransType == REVERSAL {
-		ISO8583.PushElement(3, param[transData.OriginalTransType].processingCode)
-		ISO8583.PushElement(24, param[transData.OriginalTransType].nii)
-		ISO8583.PushElement(25, param[transData.OriginalTransType].posCondictionCode)
+		ISO8583.SetElement(3, param[transData.OriginalTransType].processingCode)
+		ISO8583.SetElement(24, param[transData.OriginalTransType].nii)
+		ISO8583.SetElement(25, param[transData.OriginalTransType].posCondictionCode)
 	} else {
-		ISO8583.PushElement(3, param[transData.TransType].processingCode)
-		ISO8583.PushElement(24, param[transData.TransType].nii)
-		ISO8583.PushElement(25, param[transData.TransType].posCondictionCode)
+		ISO8583.SetElement(3, param[transData.TransType].processingCode)
+		ISO8583.SetElement(24, param[transData.TransType].nii)
+		ISO8583.SetElement(25, param[transData.TransType].posCondictionCode)
 	}
 
-	ISO8583.PushElement(4, fmt.Sprintf("%012s", transData.Amount))
-	ISO8583.PushElement(11, fmt.Sprintf("%06s", transData.TransId))
-	ISO8583.PushElement(14, transData.CardExpireDate)
+	ISO8583.SetElement(4, fmt.Sprintf("%012s", transData.Amount))
+	ISO8583.SetElement(11, fmt.Sprintf("%06s", transData.TransId))
+	ISO8583.SetElement(14, transData.CardExpireDate)
 
 	if ISO8583.StringIsEmpty(transData.Pin) {
-		ISO8583.PushElement(22, posEntryMode[transData.PosEntryMode]+"2")
+		ISO8583.SetElement(22, posEntryMode[transData.PosEntryMode]+"2")
 	} else {
-		ISO8583.PushElement(22, posEntryMode[transData.PosEntryMode]+"1")
+		ISO8583.SetElement(22, posEntryMode[transData.PosEntryMode]+"1")
 	}
 
 	if !ISO8583.StringIsEmpty(transData.PanSeqNo) {
-		ISO8583.PushElement(23, fmt.Sprintf("%04s", transData.PanSeqNo))
+		ISO8583.SetElement(23, fmt.Sprintf("%04s", transData.PanSeqNo))
 	}
 
 	if !ISO8583.StringIsEmpty(transData.AcquireTransID) {
-		ISO8583.PushElement(37, transData.AcquireTransID)
+		ISO8583.SetElement(37, transData.AcquireTransID)
 	}
 
 	if !ISO8583.StringIsEmpty(transData.TerminalId) {
-		ISO8583.PushElement(41, transData.TerminalId)
+		ISO8583.SetElement(41, transData.TerminalId)
 	}
 
 	if !ISO8583.StringIsEmpty(transData.MerchantId) {
-		ISO8583.PushElement(42, transData.MerchantId)
+		ISO8583.SetElement(42, transData.MerchantId)
 	}
 
 	DE55 := TLV.BuildConstructTLVMsg(transData.IccRelatedData)
-	ISO8583.PushElement(55, ISO8583.Base16Encode(DE55))
+	ISO8583.SetElement(55, ISO8583.Base16Encode(DE55))
 
 	if !ISO8583.StringIsEmpty(transData.OriginalAmount) {
-		ISO8583.PushElement(60, fmt.Sprintf("%012s", transData.OriginalAmount))
+		ISO8583.SetElement(60, fmt.Sprintf("%012s", transData.OriginalAmount))
 	}
 
 	if !ISO8583.StringIsEmpty(transData.Invoice) {
-		ISO8583.PushElement(62, transData.Invoice)
+		ISO8583.SetElement(62, transData.Invoice)
 	}
 
 	msg, err := ISO8583.PrepareISO8583Message(fields)
