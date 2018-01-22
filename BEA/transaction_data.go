@@ -1,9 +1,24 @@
-package BEA
+package sdk
 
 import (
 	"encoding/json"
 	"fmt"
 )
+
+type BatchTotals struct {
+	CapturedSalesCount    int
+	CapturedSalesAmount   int64
+	CapturedRefundCount   int
+	CapturedRefundAmount  int64
+	DebitSalesCount       int
+	DebitSalesAmount      int64
+	DebitRefundCount      int
+	DebitRefundAmount     int64
+	AuthorizeSalesCount   int
+	AuthorizeSalesAmount  int64
+	AuthorizeRefundCount  int
+	AuthorizeRefundAmount int64
+}
 
 type TransactionData struct {
 	TransId           string            `json:"trans_id"`             //流水号--------11
@@ -24,7 +39,7 @@ type TransactionData struct {
 	AuthCode          string            `json:"auth_code"`               //授权码-------38
 	ResponseCode      BEACode           `json:"response_code"`           //响应码-------39
 	Invoice           string            `json:"invoice,omitempty"`       //发票号-------62
-	BatchTotal        string            `json:"batch_total,omitempty"`   //settlement总金额----62
+	Batchtotals       BatchTotals       `json:"batch_total,omitempty"`   //settlement总金额----62
 	BatchNumber       string            `json:"batch_number,omitempty"`  //settlement批次------60
 	OriginalAmount    string            `json:"origin_amount,omitempty"` //原交易金额----
 	OriginalTransType TransactionType   `json:"origin_amount,omitempty"` //原交易金额----

@@ -1,4 +1,4 @@
-package BEA
+package sdk
 
 import (
 	"fmt"

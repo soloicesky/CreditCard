@@ -1,7 +1,7 @@
 package TLV
 
 import (
-	"CreditCard/ISO8583"
+	"bindolabs/gateway/services/bea/ISO8583"
 	"fmt"
 )
 

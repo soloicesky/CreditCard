@@ -1,8 +1,8 @@
-package BEA
+package sdk
 
 import (
-	"CreditCard/ISO8583"
-	"CreditCard/TLV"
+	"bindolabs/gateway/services/bea/ISO8583"
+	"bindolabs/gateway/services/bea/TLV"
 	"errors"
 	"fmt"
 	"net"

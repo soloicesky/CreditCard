@@ -1,4 +1,4 @@
-package BEA
+package sdk
 
 import (
 	"fmt"
@@ -20,6 +20,7 @@ const (
 	PREAUTHCOMPLETION     TransactionType = "PREAUTHCOMPLETION"     //预授权完成
 	VOIDPREAUTHCOMPLETION TransactionType = "VOIDPREAUTHCOMPLETION" //预授权完成撤销
 	SETTLEMENT            TransactionType = "SETTLEMENT"            //结算
+	SETTLEMENTAFTERUPLOAD TransactionType = "SETTLEMENTAFTERUPLOAD" //批上送后结算
 	BATCHUPLOAD           TransactionType = "BATCHUPLOAD"           //批上送
 	REVERSAL              TransactionType = "REVERSAL"              //冲正
 )
@@ -67,6 +68,8 @@ var param = map[TransactionType]msgParam{
 	PREAUTHCOMPLETION:     {"0220", "000000", "028", "00"}, //预授权完成
 	VOIDPREAUTHCOMPLETION: {"0220", "000000", "028", "00"}, //预授权完成撤销
 	REVERSAL:              {"0400", "000000", "028", "00"}, //冲正
+	SETTLEMENT:            {"0500", "920000", "028", "00"}, //结算
+	SETTLEMENTAFTERUPLOAD: {"0500", "960000", "028", "00"}, //批上送后结算
 }
 
 func getAllEntryModes() []EntryMode {

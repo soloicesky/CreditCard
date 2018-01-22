@@ -1,8 +1,8 @@
-package BEA
+package sdk
 
 import (
-	"CreditCard/ISO8583"
-	"CreditCard/TLV"
+	"bindolabs/gateway/services/bea/ISO8583"
+	"bindolabs/gateway/services/bea/TLV"
 	_ "crypto/cipher"
 	"crypto/des"
 	"fmt"
@@ -100,6 +100,15 @@ func createIISO8583Message(transData *TransactionData, fields []byte, config *Co
 		ISO8583.SetElement(62, transData.Invoice)
 	}
 
+	batchTotal := fmt.Sprintf("%03d%012d%03d%012d%03d%012d%03d%012d%03d%012d%03d%012d",
+		transData.Batchtotals.CapturedSalesCount, transData.Batchtotals.CapturedSalesAmount,
+		transData.Batchtotals.CapturedRefundCount, transData.Batchtotals.CapturedRefundAmount,
+		transData.Batchtotals.DebitSalesCount, transData.Batchtotals.DebitSalesAmount,
+		transData.Batchtotals.DebitRefundCount, transData.Batchtotals.DebitRefundAmount,
+		transData.Batchtotals.AuthorizeSalesCount, transData.Batchtotals.AuthorizeSalesAmount,
+		transData.Batchtotals.AuthorizeRefundCount, transData.Batchtotals.AuthorizeRefundAmount)
+
+	ISO8583.SetElement(63, batchTotal)
 	msg, err := ISO8583.PrepareISO8583Message(fields)
 
 	if err != nil {

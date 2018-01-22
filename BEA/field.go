@@ -1,4 +1,8 @@
-package BEA
+package sdk
+
+import (
+	"fmt"
+)
 
 type beaFieldMap map[EntryMode][]byte
 
@@ -111,7 +115,7 @@ var (
 
 var (
 	logonField      = []byte{0, 3, 11, 24, 41}
-	settlementField = []byte{0, 3, 11, 24, 41}
+	settlementField = []byte{0, 2, 3, 4, 11, 14, 22, 24, 25, 41, 42, 62}
 )
 
 var transactionFieldMap = map[TransactionType]beaFieldMap{
@@ -128,8 +132,9 @@ var transactionFieldMap = map[TransactionType]beaFieldMap{
 	REVERSAL:              reversalFieldMap,              //冲正
 }
 var managerFieldMap = map[TransactionType][]byte{
-	LOGON:      logonField,
-	SETTLEMENT: settlementField,
+	LOGON:                 logonField,
+	SETTLEMENT:            settlementField,
+	SETTLEMENTAFTERUPLOAD: settlementField, //批上送后结算
 }
 
 func getFields(transType TransactionType, mode EntryMode) ([]byte, error) {
