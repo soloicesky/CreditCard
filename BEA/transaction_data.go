@@ -26,6 +26,7 @@ type TransactionData struct {
 	TransDate         string            `json:"trans_date"`           //交易日期------13
 	TransTime         string            `json:"trans_time"`           //交易时间------12
 	Amount            string            `json:"amount"`               //授权金额------04
+	TipAmount         string            `json:"tip"`                  //消费金额
 	Pin               string            `json:"pin"`                  //联机PINBLOCK--52
 	MerchantId        string            `json:"merchant_id"`          //商户号--------42
 	TerminalId        string            `json:"terminal_id"`          //终端号--------41
