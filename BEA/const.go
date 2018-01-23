@@ -8,21 +8,38 @@ type TransactionType string
 
 //交易类型常量
 const (
-	LOGON                 TransactionType = "LOGON"                 //签到
-	SALE                  TransactionType = "SALE"                  //消费
-	VOIDSALE              TransactionType = "VOIDSALE"              //消费撤销
-	REFUND                TransactionType = "REFUND"                //退货
-	VOIDREFUND            TransactionType = "VOIDREFUND"            //退货撤销
-	OFFLINESALE           TransactionType = "OFFLINESALE"           //离线消费
-	VOIDOFFLINESALE       TransactionType = "VOIDOFFLINESALE"       //离线消费撤销
-	PREAUTH               TransactionType = "PREAUTH"               //预授权
-	VOIDPREAUTH           TransactionType = "VOIDPREAUTH"           //预授权
-	PREAUTHCOMPLETION     TransactionType = "PREAUTHCOMPLETION"     //预授权完成
-	VOIDPREAUTHCOMPLETION TransactionType = "VOIDPREAUTHCOMPLETION" //预授权完成撤销
-	SETTLEMENT            TransactionType = "SETTLEMENT"            //结算
-	SETTLEMENTAFTERUPLOAD TransactionType = "SETTLEMENTAFTERUPLOAD" //批上送后结算
-	BATCHUPLOAD           TransactionType = "BATCHUPLOAD"           //批上送
-	REVERSAL              TransactionType = "REVERSAL"              //冲正
+	LOGON                          TransactionType = "LOGON"                          //签到
+	SALE                           TransactionType = "SALE"                           //消费
+	VOIDSALE                       TransactionType = "VOIDSALE"                       //消费撤销
+	REFUND                         TransactionType = "REFUND"                         //退货
+	VOIDREFUND                     TransactionType = "VOIDREFUND"                     //退货撤销
+	OFFLINESALE                    TransactionType = "OFFLINESALE"                    //离线消费
+	VOIDOFFLINESALE                TransactionType = "VOIDOFFLINESALE"                //离线消费撤销
+	PREAUTH                        TransactionType = "PREAUTH"                        //预授权
+	VOIDPREAUTH                    TransactionType = "VOIDPREAUTH"                    //预授权
+	PREAUTHCOMPLETION              TransactionType = "PREAUTHCOMPLETION"              //预授权完成
+	VOIDPREAUTHCOMPLETION          TransactionType = "VOIDPREAUTHCOMPLETION"          //预授权完成撤销
+	SETTLEMENT                     TransactionType = "SETTLEMENT"                     //结算
+	SETTLEMENTAFTERUPLOAD          TransactionType = "SETTLEMENTAFTERUPLOAD"          //批上送后结算
+	BATCHUPLOAD                    TransactionType = "BATCHUPLOAD"                    //批上送
+	BATCHUPLOADLAST                TransactionType = "BATCHUPLOADLAST"                //批上送
+	REVERSAL                       TransactionType = "REVERSAL"                       //冲正
+	OFFLINEUPLOAD                  TransactionType = "OFFLINEUPLOAD"                  //离线上送
+	VOIDADJUSTSALE                 TransactionType = "VOIDADJUSTSALE"                 //撤销消费调整
+	ADJUSTSALE                     TransactionType = "ADJUSTSALE"                     //消费调整
+	ADJUSTOFFLINESALE              TransactionType = "ADJUSTOFFLINESALE"              //离线消费调整
+	VOIDADJUSTOFFLINESALE          TransactionType = "VOIDADJUSTOFFLINESALE"          //离线消费调整撤销
+	VOIDUPLOADADJUSTOFFLINESALE    TransactionType = "VOIDUPLOADADJUSTOFFLINESALE"    //上送离线消费调整撤销
+	ADJUSTUPLOADOFFLINESALE        TransactionType = "ADJUSTUPLOADOFFLINESALE"        //上送离线消费调整撤销
+	VOIDADJUSTUPLOADOFFLINESALE    TransactionType = "VOIDADJUSTUPLOADOFFLINESALE"    //上送离线消费调整撤销
+	ADJUSTUPLOADADJUSTSALE         TransactionType = "ADJUSTUPLOADADJUSTSALE"         //上送离线消费调整撤销
+	VOIDADJUSTUPLOADADJUSTSALE     TransactionType = "VOIDADJUSTUPLOADADJUSTSALE"     //上送离线消费调整撤销
+	ADJUSTSALECOMPLETION           TransactionType = "ADJUSTSALECOMPLETION"           //上送离线消费调整撤销
+	VOIDADJUSTSALECOMPLETION       TransactionType = "VOIDADJUSTSALECOMPLETION"       //上送离线消费调整撤销
+	VOIDUPLOADADJUSTSALECOMPLETION TransactionType = "VOIDUPLOADADJUSTSALECOMPLETION" //上送离线消费调整撤销
+	ADJUSTREFUND                   TransactionType = "ADJUSTREFUND"                   //调整退货
+	VOIDADJUSTREFUND               TransactionType = "VOIDADJUSTREFUND"               //调整退货撤销
+	VOIDUPLOADADJUSTREFUND         TransactionType = "VOIDUPLOADADJUSTREFUND"         //上送退货调整撤销
 )
 
 type EntryMode string
@@ -56,20 +73,37 @@ type msgParam struct {
 
 //消息参数表
 var param = map[TransactionType]msgParam{
-	LOGON:                 {"0800", "920000", "028", "00"}, //消费参数
-	SALE:                  {"0200", "000000", "028", "00"}, //消费参数
-	VOIDSALE:              {"0200", "020000", "028", "00"}, //消费撤销参数
-	REFUND:                {"0200", "200000", "028", "00"}, //退货
-	VOIDREFUND:            {"0200", "220000", "028", "00"}, //撤销退货
-	OFFLINESALE:           {"0220", "000000", "028", "00"}, //离线消费
-	VOIDOFFLINESALE:       {"0220", "000000", "028", "00"}, //离线消费撤销
-	PREAUTH:               {"0100", "000000", "028", "00"}, //预授权
-	VOIDPREAUTH:           {"0120", "000000", "028", "00"}, //预授权撤销
-	PREAUTHCOMPLETION:     {"0220", "000000", "028", "00"}, //预授权完成
-	VOIDPREAUTHCOMPLETION: {"0220", "000000", "028", "00"}, //预授权完成撤销
-	REVERSAL:              {"0400", "000000", "028", "00"}, //冲正
-	SETTLEMENT:            {"0500", "920000", "028", "00"}, //结算
-	SETTLEMENTAFTERUPLOAD: {"0500", "960000", "028", "00"}, //批上送后结算
+	LOGON:                          {"0800", "920000", "028", "00"}, //消费参数
+	SALE:                           {"0200", "000000", "028", "00"}, //消费参数
+	VOIDSALE:                       {"0200", "020000", "028", "00"}, //消费撤销参数
+	REFUND:                         {"0200", "200000", "028", "00"}, //退货
+	VOIDREFUND:                     {"0200", "220000", "028", "00"}, //撤销退货
+	OFFLINESALE:                    {"0220", "000000", "028", "00"}, //离线消费
+	VOIDOFFLINESALE:                {"0220", "000000", "028", "00"}, //离线消费撤销
+	PREAUTH:                        {"0100", "000000", "028", "00"}, //预授权
+	VOIDPREAUTH:                    {"0120", "000000", "028", "00"}, //预授权撤销
+	PREAUTHCOMPLETION:              {"0220", "000000", "028", "00"}, //预授权完成
+	VOIDPREAUTHCOMPLETION:          {"0220", "000000", "028", "00"}, //预授权完成撤销
+	REVERSAL:                       {"0400", "000000", "028", "00"}, //冲正
+	SETTLEMENT:                     {"0500", "920000", "028", "00"}, //结算
+	SETTLEMENTAFTERUPLOAD:          {"0500", "960000", "028", "00"}, //批上送后结算
+	BATCHUPLOAD:                    {"0320", "000000", "028", "00"}, //批上送
+	BATCHUPLOADLAST:                {"0320", "000000", "028", "00"}, //批上送结束
+	VOIDADJUSTSALE:                 {"0200", "000000", "028", "00"}, //消费调整撤销
+	ADJUSTSALE:                     {"0220", "000000", "028", "00"}, //消费调整
+	ADJUSTOFFLINESALE:              {"0220", "000000", "028", "00"}, //离线消费调整
+	VOIDADJUSTOFFLINESALE:          {"0220", "000000", "028", "00"}, //离线消费调整撤销
+	VOIDUPLOADADJUSTOFFLINESALE:    {"0220", "000000", "028", "00"}, //离线消费调整上送撤销
+	ADJUSTUPLOADOFFLINESALE:        {"0220", "000000", "028", "00"}, //离线消费上送调整
+	VOIDADJUSTUPLOADOFFLINESALE:    {"0220", "000000", "028", "00"}, //离线消费上送调整撤销
+	ADJUSTUPLOADADJUSTSALE:         {"0220", "020000", "028", "00"}, //离线调整上送调整
+	VOIDADJUSTUPLOADADJUSTSALE:     {"0220", "020000", "028", "00"}, //消费调整上送调整撤销
+	ADJUSTSALECOMPLETION:           {"0220", "000000", "028", "00"}, //预授权完成调整
+	VOIDADJUSTSALECOMPLETION:       {"0220", "000000", "028", "00"}, //预授权完成调整撤销
+	VOIDUPLOADADJUSTSALECOMPLETION: {"0220", "020000", "028", "00"}, //预授权完成调整上送撤销
+	ADJUSTREFUND:                   {"0220", "220000", "028", "00"}, //退货调整
+	VOIDADJUSTREFUND:               {"0220", "220000", "028", "00"}, //退货调整撤销
+	VOIDUPLOADADJUSTREFUND:         {"0220", "220000", "028", "00"}, //退货调整上送撤销
 }
 
 func getAllEntryModes() []EntryMode {
