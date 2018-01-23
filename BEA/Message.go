@@ -1,10 +1,8 @@
 package sdk
 
 import (
-	// "bindolabs/gateway/services/bea/ISO8583"
-	// "bindolabs/gateway/services/bea/TLV"
-"CreditCard/ISO8583"
-"CreditCard/TLV"
+	"bindolabs/gateway/services/bea/ISO8583"
+	"bindolabs/gateway/services/bea/TLV"
 	_ "crypto/cipher"
 	"crypto/des"
 	"fmt"
