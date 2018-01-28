@@ -164,7 +164,7 @@ func PrepareISO8583Message(fdSets []byte) (msg []byte, err error) {
 	var e string
 	var ok bool
 
-	fmt.Printf("fdSets size:%d\r\n", len(fdSets))
+	//	fmt.Printf("fdSets size:%d\r\n", len(fdSets))
 
 	for _, id := range fdSets {
 		attr, ok = fieldAttr[int(id)]
@@ -188,7 +188,7 @@ func PrepareISO8583Message(fdSets []byte) (msg []byte, err error) {
 			vlen = len(e)
 		}
 
-		fmt.Printf("[id]:%dvalue:%s\r\n", id, e)
+		//		fmt.Printf("[id]:%dvalue:%s\r\n", id, e)
 		if vlen > attr.maxLen {
 			err = fmt.Errorf("[%d]len invalid, expected:%d, in:%d\r\n", id, attr.maxLen, vlen)
 			continue
@@ -243,7 +243,7 @@ func PrepareISO8583Message(fdSets []byte) (msg []byte, err error) {
 
 		if id > 0 {
 			bitmap[(id-1)/8] |= 1 << ((8 - id) % 8)
-			fmt.Printf("bitmap:%v", bitmap)
+			//fmt.Printf("bitmap:%v", bitmap)
 		}
 
 		if id == 0 {
@@ -251,8 +251,8 @@ func PrepareISO8583Message(fdSets []byte) (msg []byte, err error) {
 			offset += 8
 		}
 
-		fmt.Printf("offset:%d\r\n", offset)
-		fmt.Printf("message now:%s\r\n", Base16Encode(message[0:offset]))
+		//		fmt.Printf("offset:%d\r\n", offset)
+		//		fmt.Printf("message now:%s\r\n", Base16Encode(message[0:offset]))
 	}
 
 	copy(message[bitmapOffset:bitmapOffset+8], bitmap)

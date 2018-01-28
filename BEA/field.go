@@ -254,22 +254,22 @@ var (
 )
 
 var transactionFieldMap = map[TransactionType]beaFieldMap{
-	SALE:                  saleFieldMap,                  //消费参数
-	VOIDSALE:              voidSaleFieldMap,              //消费撤销参数
-	REFUND:                refundFieldMap,                //退货
-	VOIDREFUND:            voidRefundFieldMap,            //撤销退货
-	OFFLINESALE:           offlineSaleFieldMap,           //离线消费
-	VOIDOFFLINESALE:       voidOfflineSaleFieldMap,       //离线消费撤销
-	PREAUTH:               preAuthorizationFieldMap,      //预授权
-	VOIDPREAUTH:           voidPreAuthFieldMap,           //预授权撤销
-	PREAUTHCOMPLETION:     preAuthCompletionFieldMap,     //预授权完成
-	VOIDPREAUTHCOMPLETION: voidPreAuthCompletionFieldMap, //预授权完成撤销
-	REVERSAL:              reversalFieldMap,              //冲正
+	KindSale:                  saleFieldMap,                  //消费参数
+	KindVoidSale:              voidSaleFieldMap,              //消费撤销参数
+	KindRefund:                refundFieldMap,                //退货
+	KindVoidRefund:            voidRefundFieldMap,            //撤销退货
+	KindOfflineSale:           offlineSaleFieldMap,           //离线消费
+	KindVoidOfflineSale:       voidOfflineSaleFieldMap,       //离线消费撤销
+	KindPreAuthorize:          preAuthorizationFieldMap,      //预授权
+	KindVoidPreAuthorize:      voidPreAuthFieldMap,           //预授权撤销
+	KindPreAuthCompletion:     preAuthCompletionFieldMap,     //预授权完成
+	KindVoidPreAuthCompletion: voidPreAuthCompletionFieldMap, //预授权完成撤销
+	KindReversal:              reversalFieldMap,              //冲正
 }
 var managerFieldMap = map[TransactionType][]byte{
-	LOGON:                 logonField,
-	SETTLEMENT:            settlementField,
-	SETTLEMENTAFTERUPLOAD: settlementField, //批上送后结算
+	KindLogon:                logonField,
+	KindSettlment:            settlementField,
+	KindSettlmentAfterUpload: settlementField, //批上送后结算
 }
 
 func getFields(transType TransactionType, mode EntryMode) ([]byte, error) {
