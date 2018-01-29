@@ -81,12 +81,12 @@ func createIISO8583Message(transData *TransactionData, fields []byte, config *Co
 		ISO8583.SetElement(37, transData.AcquireTransID)
 	}
 
-	if !ISO8583.StringIsEmpty(transData.TerminalId) {
-		ISO8583.SetElement(41, transData.TerminalId)
+	if !ISO8583.StringIsEmpty(config.TerminalId) {
+		ISO8583.SetElement(41, config.TerminalId)
 	}
 
-	if !ISO8583.StringIsEmpty(transData.MerchantId) {
-		ISO8583.SetElement(42, transData.MerchantId)
+	if !ISO8583.StringIsEmpty(config.MerchantId) {
+		ISO8583.SetElement(42, config.MerchantId)
 	}
 
 	DE55 := TLV.BuildConstructTLVMsg(transData.IccRelatedData)
