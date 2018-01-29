@@ -100,7 +100,7 @@ func createIISO8583Message(transData *TransactionData, fields []byte, config *Co
 		ISO8583.SetElement(62, transData.Invoice)
 	}
 
-	batchTotal := fmt.Sprintf("%03d%012.2f%03d%012.2f%03d%012.2f%03d%012.2f%03d%012.2f%03d%012.2f",
+	batchTotal := fmt.Sprintf("%03d%012d%03d%012d%03d%012d%03d%012d%03d%012d%03d%012d",
 		transData.Batchtotals.CapturedSalesCount, transData.Batchtotals.CapturedSalesAmount,
 		transData.Batchtotals.CapturedRefundCount, transData.Batchtotals.CapturedRefundAmount,
 		transData.Batchtotals.DebitSalesCount, transData.Batchtotals.DebitSalesAmount,

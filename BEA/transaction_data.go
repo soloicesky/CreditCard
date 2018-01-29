@@ -7,17 +7,17 @@ import (
 
 type BatchTotals struct {
 	CapturedSalesCount    int
-	CapturedSalesAmount   float64
+	CapturedSalesAmount   int64
 	CapturedRefundCount   int
-	CapturedRefundAmount  float64
+	CapturedRefundAmount  int64
 	DebitSalesCount       int
-	DebitSalesAmount      float64
+	DebitSalesAmount      int64
 	DebitRefundCount      int
-	DebitRefundAmount     float64
+	DebitRefundAmount     int64
 	AuthorizeSalesCount   int
-	AuthorizeSalesAmount  float64
+	AuthorizeSalesAmount  int64
 	AuthorizeRefundCount  int
-	AuthorizeRefundAmount float64
+	AuthorizeRefundAmount int64
 }
 
 type TransactionData struct {
