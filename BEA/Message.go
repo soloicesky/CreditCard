@@ -53,7 +53,7 @@ func encryptISO8583Message(msg []byte) []byte {
 func createIISO8583Message(transData *TransactionData, fields []byte, config *Config) ([]byte, error) {
 	ISO8583.SetElement(0, param[transData.TransType].id)
 	ISO8583.SetElement(2, transData.Pan)
-	if transData.TransType == REVERSAL {
+	if transData.TransType == REVERSAL || transData.TransType == BATCHUPLOAD || transData.TransType == BATCHUPLOADLAST {
 		ISO8583.SetElement(3, param[transData.OriginalTransType].processingCode)
 		ISO8583.SetElement(24, param[transData.OriginalTransType].nii)
 		ISO8583.SetElement(25, param[transData.OriginalTransType].posCondictionCode)
