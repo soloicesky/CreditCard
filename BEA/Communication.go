@@ -53,7 +53,7 @@ func sendData(reqMsg []byte, config *Config) ([]byte, error) {
 	storage 存储位置
 **/
 func saveData(fieldId int, value string, storage interface{}) error {
-	transData, OK := storage.(TransactionData)
+	transData, OK := storage.(*TransactionData)
 	if !OK {
 		return errors.New("interface is not a type of TransactionData")
 	}
