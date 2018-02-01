@@ -1,4 +1,4 @@
-package sdk
+package BEA
 
 type BEACode string
 

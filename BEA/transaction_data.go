@@ -1,4 +1,4 @@
-package sdk
+package BEA
 
 import (
 	"encoding/json"
@@ -28,8 +28,6 @@ type TransactionData struct {
 	Amount            string            `json:"amount"`               //授权金额------04
 	TipAmount         string            `json:"tip"`                  //消费金额
 	Pin               string            `json:"pin"`                  //联机PINBLOCK--52
-	MerchantId        string            `json:"merchant_id"`          //商户号--------42
-	TerminalId        string            `json:"terminal_id"`          //终端号--------41
 	Pan               string            `json:"pan"`                  //主账号--------02
 	PanSeqNo          string            `json:"pan_seq_no,omitempty"` //卡片序列号-----
 	CardExpireDate    string            `json:"card_exp_date"`        //有效期--------14
@@ -58,8 +56,12 @@ func (t TransactionData) FormJson() string {
 
 //后台配置参数
 type Config struct {
-	Host    string //后台地址
-	TPDU    string //tpdu
-	EDS     string //eds
-	TimeOut int
+	Host       string //后台地址
+	TPDU       string //tpdu
+	EDS        string //eds
+	TerminalId string
+	MerchantId string
+	TMK        string
+	TMKIndex   string
+	TimeOut    int
 }
