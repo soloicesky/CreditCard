@@ -1,9 +1,6 @@
-package sdk
+package BEA
 
-import (
-	"fmt"
-)
-
+/*
 func DoRequest(transData *TransactionData, config *Config) (*TransactionData, error) {
 	err := getSupportEntryMode(transData.PosEntryMode)
 	if err != nil {
@@ -28,4 +25,21 @@ func DoRequest(transData *TransactionData, config *Config) (*TransactionData, er
 		return nil, fmt.Errorf("communicateWithHost error: %s", err.Error())
 	}
 	return replyData, nil
+}*/
+
+func DoRequest(transData *TransactionData, config *Config) (*TransactionData, error) {
+	//生成NewAuthorize结构体
+	//Valid()
+	//Fields()
+	//删除多余的field
+	//正式开始调用create message，进行交易
+	return nil, nil
+}
+
+func getTransactionInterface(transData *TransactionData, config *Config) BEAInterface {
+	switch transData.TransType {
+	case KindPreAuthorize:
+		return NewAuthorize(transData, config)
+	}
+	return nil
 }

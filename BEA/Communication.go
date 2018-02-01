@@ -1,8 +1,8 @@
-package sdk
+package BEA
 
 import (
-	"bindolabs/gateway/services/bea/ISO8583"
-	"bindolabs/gateway/services/bea/TLV"
+	"CreditCard/ISO8583"
+	"CreditCard/TLV"
 	"errors"
 	"fmt"
 	"net"
@@ -16,7 +16,7 @@ func sendData(reqMsg []byte, config *Config) ([]byte, error) {
 	if err != nil {
 		return nil, CONN_ERR
 	}
-
+	defer conn.Close()
 	conn.SetReadDeadline(time.Now().Add(time.Duration(config.TimeOut) * time.Second))
 	count, err := conn.Write(reqMsg)
 	if err != nil {
@@ -42,7 +42,6 @@ func sendData(reqMsg []byte, config *Config) ([]byte, error) {
 			break
 		}
 	}
-
 	return rspMsg, nil
 }
 
@@ -81,10 +80,10 @@ func saveData(fieldId int, value string, storage interface{}) error {
 	config 配置参数
 	fields 域集合
 **/
-func communicateWithHost(transData *TransactionData, config *Config, fields []byte) (*TransactionData, error) {
-	msg, err := createIISO8583Message(transData, fields, config)
+func communicateWithHost(transData *TransactionData, config *Config, fieldsMap map[uint8]string) (*TransactionData, error) {
+	msg, err := createIISO8583Message(fieldsMap, config)
 	if err != nil {
-		return transData, fmt.Errorf("CreateIISO8583Message error: %s", err.Error())
+		return nil, fmt.Errorf("CreateIISO8583Message error: %s", err.Error())
 	}
 
 	fmt.Printf("Final Msg:%s\r\n", ISO8583.Base16Encode(msg))
