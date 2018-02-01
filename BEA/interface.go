@@ -9,6 +9,8 @@ type BEAInterface interface {
 	Valid() error
 	Fields() []byte
 	SetFields()
+	GetFieldsMap() map[uint8]string
+	Name() string
 }
 
 type BaseElement struct {
@@ -23,6 +25,14 @@ func (e BaseElement) get(key uint8) string {
 
 func (e BaseElement) set(key uint8, val string) {
 	e.elementMap[key] = val
+}
+
+func (e BaseElement) init() {
+	e.elementMap = make(map[uint8]string)
+}
+
+func (e BaseElement) GetFieldsMap() map[uint8]string {
+	return e.elementMap
 }
 
 func (e BaseElement) baseFieldSet() {
