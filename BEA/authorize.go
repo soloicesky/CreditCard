@@ -3,6 +3,8 @@ package BEA
 type AuthorizeTransaction struct {
 	entryMap map[EntryMode][]uint8
 	BaseElement
+	messageTypeId  string
+	processingCode string
 }
 
 func NewAuthorize(trans *TransactionData, config *Config) *AuthorizeTransaction {
@@ -20,6 +22,8 @@ func NewAuthorize(trans *TransactionData, config *Config) *AuthorizeTransaction 
 			transData: trans,
 			config:    config,
 		},
+		messageTypeId:  "0100",
+		processingCode: "000000",
 	}
 }
 
@@ -44,4 +48,8 @@ func (auth *AuthorizeTransaction) SetFields() {
 
 func (auth *AuthorizeTransaction) Fields() []uint8 {
 	return auth.entryMap[auth.transData.PosEntryMode]
+}
+
+func (auth *AuthorizeTransaction) Name() string {
+	return auth.transData.TransType
 }
