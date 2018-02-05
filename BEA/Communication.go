@@ -1,8 +1,8 @@
 package BEA
 
 import (
-	"CreditCard/ISO8583"
-	"CreditCard/TLV"
+	"ISO8583"
+	"TLV"
 	"errors"
 	"fmt"
 	"net"
@@ -93,7 +93,7 @@ func communicateWithHost(transData *TransactionData, config *Config, fieldsMap m
 	}
 
 	fmt.Printf("reponse ISO8583:%s\r\n", ISO8583.Base16Encode(msg))
-	err = ISO8583.DecodeISO8583Message(msg[2+5+7:], saveData, transData)
+	err = ISO8583.DecodeISO8583Message(msg[2+5:], saveData, transData)
 	if err != nil {
 		transData.ResponseCode = BINDO_RECV_ERR
 		return nil, fmt.Errorf("ISO8583::DecodeISO8583Message error: %s", err.Error())

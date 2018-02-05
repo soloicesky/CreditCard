@@ -1,11 +1,17 @@
 package BEA
 
 import (
-	"CreditCard/ISO8583"
+	"ISO8583"
 	_ "crypto/cipher"
 	"crypto/des"
 	"fmt"
 )
+
+func ZeroPadding(ciphertext []byte, blockSize int) []byte {
+	padding := blockSize - len(ciphertext)%blockSize
+	padtext := bytes.Repeat([]byte{0}, padding)
+	return append(ciphertext, padtext...)
+}
 
 //加密ISO8583消息
 func encryptISO8583Message(msg []byte) []byte {
@@ -17,31 +23,34 @@ func encryptISO8583Message(msg []byte) []byte {
 		key = append(key, keyV1[i]^keyV2[i])
 	}
 
+	msg = ZeroPadding(msg, 8)
 	var tripleDESKey []byte
 	tripleDESKey = append(tripleDESKey, key[:16]...)
 	tripleDESKey = append(tripleDESKey, key[:8]...)
 
-	tdesCipher, err := des.NewTripleDESCipher(tripleDESKey)
+	tdesCipher, err := des.NewTripleCBCCipher(tripleDESKey)
 
 	if err != nil {
 		panic(err)
 	}
 
-	round := (len(msg) + 7) / 8
-	dstLen := round * 8
-	fmt.Printf("msg len:%d,round:%d,dstLen:%d\r\n", len(msg), round, dstLen)
-	plainMsg := make([]byte, dstLen)
-	copy(plainMsg, msg)
-	encryptedMsg := make([]byte, 0)
-	encBlock := make([]byte, 8)
-	var plainBlock []byte
+	encryptedMsg := make([]byte, len(msg))
+	// round := (len(msg) + 7) / 8
+	// dstLen := round * 8
+	// fmt.Printf("msg len:%d,round:%d,dstLen:%d\r\n", len(msg), round, dstLen)
+	// plainMsg := make([]byte, dstLen)
+	// copy(plainMsg, msg)
+	// encryptedMsg := make([]byte, 0)
+	// encBlock := make([]byte, 8)
+	// var plainBlock []byte
 
-	for i := 0; i < round; i++ {
-		plainBlock = plainMsg[i*8 : i*8+8]
-		tdesCipher.Encrypt(encBlock, plainBlock)
-		encryptedMsg = append(encryptedMsg, encBlock...)
-	}
-
+	// for i := 0; i < round; i++ {
+	// 	plainBlock = plainMsg[i*8 : i*8+8]
+	// 	tdesCipher.Encrypt(encBlock, plainBlock)
+	// 	encryptedMsg = append(encryptedMsg, encBlock...)
+	// }
+	
+	tdesCipher.Encrypt(encryptedMsg, msg)
 	return encryptedMsg
 }
 
